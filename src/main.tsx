@@ -1,11 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles/index.css";
-import "./styles/destyle.css";git add .
-import App from "./App.tsx";
+import "./styles/destyle.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <h1 className="text-3xl font-bold underline">Hello world!</h1>
   </StrictMode>,
 );
