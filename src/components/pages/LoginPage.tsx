@@ -1,3 +1,4 @@
+import { Input } from "../atoms/Input";
 import { PrimaryBtn } from "../atoms/PrimaryBtn";
 
 export const LoginPage = () => {
@@ -6,10 +7,10 @@ export const LoginPage = () => {
       <form className="flex flex-col justify-center items-center gap-10">
         <h1 className="text-3xl text-lime-800 font-bold text-center">ログイン</h1>
         <div className="w-[80%]">
-          <input type="text" className="w-full border-4 border-solid border-lime-800 rounded-md p-2" placeholder="email" />
+          <Input type="text" placeholder="email" />
         </div>
         <div className="w-[80%]">
-          <input type="password" className="w-full border-4 border-solid border-lime-800 rounded-md p-2" placeholder="password" />
+          <Input type="password" placeholder="password" />
         </div>
         <PrimaryBtn>ログイン</PrimaryBtn>
       </form>
