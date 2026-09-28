@@ -2,8 +2,8 @@ import { eachDayOfInterval, eachWeekOfInterval, endOfMonth, endOfWeek, getMonth,
 import { useEffect, useState } from "react";
 import { CalendarHeader } from "../organisms/CalendarHeader";
 import { CalendarBody } from "../organisms/CalendarBody";
-import { DateList, Schedule } from "../../types/calendar";
 import { getScheduleList } from "../../api/calendar";
+import type { DateList, Schedule } from "../../types/calendar";
 
 export const CalendarPage = () => {
   const today = new Date();
