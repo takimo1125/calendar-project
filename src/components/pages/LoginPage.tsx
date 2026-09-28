@@ -43,7 +43,9 @@ export const LoginPage = () => {
         <div className="w-[80%]">
           <Input name="password" type="password" placeholder="password" value={loginInfo.password} onChange={changeLoginInfo} />
         </div>
-        <PrimaryBtn onClick={() => null}>ログイン</PrimaryBtn>
+        <PrimaryBtn size="lg" onClick={() => null}>
+          ログイン
+        </PrimaryBtn>
       </form>
     </div>
   );
