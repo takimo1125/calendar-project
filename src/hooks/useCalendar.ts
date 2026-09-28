@@ -24,15 +24,19 @@ export const useCalendar = ({ currentDate }: PropsType) => {
 
     const scheduleList = getScheduleList();
     scheduleList.forEach((schedule) => {
-      const firstIndex = newDateList.findIndex((oneWeek) => oneWeek.some((item) => isSameDay(item.date, schedule.date)));
+      const firstIndex = newDateList.findIndex((oneWeek) => {
+        return oneWeek.some((item) => isSameDay(item.date, schedule.date));
+      });
       if (firstIndex === -1) return;
-      const secondIndex = newDateList[firstIndex].findIndex((item) => isSameDay(item.date, schedule.date));
+      const secondIndex = newDateList[firstIndex].findIndex((item) => {
+        return isSameDay(item.date, schedule.date);
+      });
 
       newDateList[firstIndex][secondIndex].schedules = [...newDateList[firstIndex][secondIndex].schedules, schedule];
     });
 
     setDateList(newDateList);
-  }, []);
+  }, [currentDate]);
 
   return {
     dateList,
