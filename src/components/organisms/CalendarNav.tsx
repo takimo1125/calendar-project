@@ -1,13 +1,19 @@
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { addMonths } from "date-fns";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { PrimaryBtn } from "../atoms/PrimaryBtn";
-import type { Dispatch, SetStateAction } from "react";
+import { CreateScheduleModal } from "./CreateScheduleModal";
+import type { Schedule } from "../../types/calendar";
 
 type PropsType = {
   setCurrentDate: Dispatch<SetStateAction<Date>>;
+  addSchedule: (schedule: Schedule) => void;
 };
 
-export const CalendarNav = ({ setCurrentDate }: PropsType) => {
+export const CalendarNav = ({ setCurrentDate, addSchedule }: PropsType) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const closeModal = () => setIsOpen(false);
+
   const changeToday = () => setCurrentDate(new Date());
   const changePrevMonth = () => setCurrentDate((prevDate) => addMonths(prevDate, -1));
   const changeNextMonth = () => setCurrentDate((prevDate) => addMonths(prevDate, 1));
@@ -21,6 +27,10 @@ export const CalendarNav = ({ setCurrentDate }: PropsType) => {
         </PrimaryBtn>
         <FaArrowAltCircleRight className="text-lime-800 text-2xl" onClick={changeNextMonth} />
       </div>
+      <PrimaryBtn size="sm" onClick={() => setIsOpen(true)}>
+        予定作成
+      </PrimaryBtn>
+      <CreateScheduleModal isOpen={isOpen} closeModal={closeModal} addSchedule={addSchedule} />
     </div>
   );
 };
