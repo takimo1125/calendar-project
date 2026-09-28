@@ -1,10 +1,15 @@
-import { eachDayOfInterval, eachWeekOfInterval, endOfMonth, endOfWeek, getDate, getMonth, startOfMonth } from "date-fns";
+import { eachDayOfInterval, eachWeekOfInterval, endOfMonth, endOfWeek, getDate, getMonth, isSameMonth, isToday, startOfMonth } from "date-fns";
 import { DAYS_LIST } from "../../constants/calendar";
 import { useEffect, useState } from "react";
 
 export const CalendarPage = () => {
   const today = new Date();
   const [dateList, setDateList] = useState<Date[][]>([]);
+
+  const dateColor = (targetDate: Date, currentDate: Date): string => {
+    if (isToday(targetDate)) return "bg-lime-800 text-white rounded-full";
+    return isSameMonth(targetDate, currentDate) ? "text-black" : "text-gray-300";
+  };
 
   useEffect(() => {
     const monthOfSundayList = eachWeekOfInterval({
@@ -38,7 +43,7 @@ export const CalendarPage = () => {
             <tr key={`week-${getDate(oneWeek[0])}`} className="mx-10">
               {oneWeek.map((item) => (
                 <td key={`day-${getDate(item)}`} className="bg-white h-[10vh] border-2 border-solid border-lime-800">
-                  <span className="inline-block w-[20px] leading-[20px] text-center">{getDate(item)}</span>
+                  <span className={`inline-block w-[20px] leading-[20px] text-center ${dateColor(item, today)}`}>{getDate(item)}</span>
                 </td>
               ))}
             </tr>
