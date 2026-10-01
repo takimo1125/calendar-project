@@ -39,7 +39,6 @@ export const useCalendar = ({ currentDate }: PropsType) => {
 
     // IDが一致するオブジェクトだけを更新した新しい配列を作る
     newDateList[firstIndex][secondIndex].schedules = newDateList[firstIndex][secondIndex].schedules.map((item) => {
-      console.log(item.id, schedule.id);
       if (item.id === schedule.id) {
         return { ...item, ...schedule };
       }
