@@ -18,7 +18,11 @@ export const useCalendar = ({ currentDate }: PropsType) => {
     const secondIndex = currentDateList[firstIndex].findIndex((item) => {
       return isSameDay(item.date, schedule.date);
     });
-    return [firstIndex, secondIndex];
+    if (secondIndex === -1) return [-1, -1];
+    const thirdIndex = currentDateList[firstIndex][secondIndex].findIndex((item) => {
+      return item.id === schedule.id;
+    });
+    return [firstIndex, secondIndex, thirdIndex];
   };
 
   const addSchedule = (schedule: Schedule) => {
@@ -34,16 +38,10 @@ export const useCalendar = ({ currentDate }: PropsType) => {
   const updateSchedule = (schedule: Schedule) => {
     const newDateList = [...dateList];
 
-    const [firstIndex, secondIndex] = getDateListIndex(newDateList, schedule);
-    if (firstIndex === -1) return;
+    const [firstIndex, secondIndex, thirdIndex] = getDateListIndex(newDateList, schedule);
+    if (firstIndex === -1 || secondIndex === -1) return;
 
-    // IDが一致するオブジェクトだけを更新した新しい配列を作る
-    newDateList[firstIndex][secondIndex].schedules = newDateList[firstIndex][secondIndex].schedules.map((item) => {
-      if (item.id === schedule.id) {
-        return { ...item, ...schedule };
-      }
-      return item;
-    });
+    newDateList[firstIndex][secondIndex].schedules[thirdIndex] = { ...newDateList[firstIndex][secondIndex].schedules[thirdIndex], ...schedule };
     setDateList(newDateList);
   };
 
