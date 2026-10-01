@@ -8,9 +8,10 @@ import type { DateList, Schedule } from "../../types/calendar";
 type PropsType = {
   currentDate: Date;
   dateList: DateList;
+  updateSchedule: (schedule: Schedule) => void;
 };
 
-export const CalendarBody = ({ currentDate, dateList }: PropsType) => {
+export const CalendarBody = ({ currentDate, dateList, updateSchedule }: PropsType) => {
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(null);
   const closeModal = () => setSelectedSchedule(null);
 
@@ -34,7 +35,7 @@ export const CalendarBody = ({ currentDate, dateList }: PropsType) => {
           </tr>
         ))}
       </tbody>
-      <ScheduleDetailModal selectedSchedule={selectedSchedule} closeModal={closeModal} />
+      <ScheduleDetailModal selectedSchedule={selectedSchedule} closeModal={closeModal} updateSchedule={updateSchedule} />
     </>
   );
 };

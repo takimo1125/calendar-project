@@ -31,6 +31,23 @@ export const useCalendar = ({ currentDate }: PropsType) => {
     setDateList(newDateList);
   };
 
+  const updateSchedule = (schedule: Schedule) => {
+    const newDateList = [...dateList];
+
+    const [firstIndex, secondIndex] = getDateListIndex(newDateList, schedule);
+    if (firstIndex === -1) return;
+
+    // IDが一致するオブジェクトだけを更新した新しい配列を作る
+    newDateList[firstIndex][secondIndex].schedules = newDateList[firstIndex][secondIndex].schedules.map((item) => {
+      console.log(item.id, schedule.id);
+      if (item.id === schedule.id) {
+        return { ...item, ...schedule };
+      }
+      return item;
+    });
+    setDateList(newDateList);
+  };
+
   useEffect(() => {
     const monthOfSundayList = eachWeekOfInterval({
       start: startOfMonth(currentDate),
@@ -57,5 +74,6 @@ export const useCalendar = ({ currentDate }: PropsType) => {
   return {
     dateList,
     addSchedule,
+    updateSchedule,
   };
 };
