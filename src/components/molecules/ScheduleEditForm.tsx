@@ -8,9 +8,10 @@ type PropsType = {
   selectedSchedule: Schedule | null;
   closeModal: () => void;
   updateSchedule: (schedule: Schedule) => void;
+  setIsEdit: (isEdit: boolean) => void;
 };
-export const ScheduleEditForm = ({ selectedSchedule, closeModal, updateSchedule }: PropsType) => {
-  const { editSchedule, errorMessage, changeEditSchedule, handleUpdateSchedule } = useUpdateSchedule({ closeModal, updateSchedule, selectedSchedule });
+export const ScheduleEditForm = ({ selectedSchedule, closeModal, updateSchedule, setIsEdit }: PropsType) => {
+  const { editSchedule, errorMessage, changeEditSchedule, handleUpdateSchedule } = useUpdateSchedule({ closeModal, updateSchedule, selectedSchedule, setIsEdit });
   return (
     <>
       <div>

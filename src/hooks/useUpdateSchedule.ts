@@ -12,9 +12,10 @@ type PropsType = {
   closeModal: () => void;
   updateSchedule: (schedule: Schedule) => void;
   selectedSchedule: Schedule | null;
+  setIsEdit: (isEdit: boolean) => void;
 };
 
-export const useUpdateSchedule = ({ closeModal, updateSchedule, selectedSchedule }: PropsType) => {
+export const useUpdateSchedule = ({ closeModal, updateSchedule, selectedSchedule, setIsEdit }: PropsType) => {
   const [editSchedule, setEditSchedule] = useState<NewSchedule>({
     title: selectedSchedule?.title ?? "",
     date: format(selectedSchedule?.date ?? new Date(), "yyyy-MM-dd"),
@@ -49,6 +50,7 @@ export const useUpdateSchedule = ({ closeModal, updateSchedule, selectedSchedule
       description: "",
     });
     setEditSchedule(INIT_SCHEDULE);
+    setIsEdit(false);
     closeModal();
   };
 
