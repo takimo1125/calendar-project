@@ -35,7 +35,7 @@ export const ScheduleDetailModal = ({ selectedSchedule, closeModal, updateSchedu
                 詳細へ戻る
               </PrimaryBtn>
             </div>
-            <ScheduleEditForm selectedSchedule={selectedSchedule} updateSchedule={updateSchedule} closeModal={closeModal} />
+            <ScheduleEditForm selectedSchedule={selectedSchedule} updateSchedule={updateSchedule} closeModal={closeModal} setIsEdit={setIsEdit} />
           </>
         ) : (
           <>
