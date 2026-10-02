@@ -19,7 +19,7 @@ export const useCalendar = ({ currentDate }: PropsType) => {
       return isSameDay(item.date, schedule.date);
     });
     if (secondIndex === -1) return [-1, -1];
-    const thirdIndex = currentDateList[firstIndex][secondIndex].findIndex((item) => {
+    const thirdIndex = currentDateList[firstIndex][secondIndex].schedules.findIndex((item) => {
       return item.id === schedule.id;
     });
     return [firstIndex, secondIndex, thirdIndex];
@@ -39,9 +39,19 @@ export const useCalendar = ({ currentDate }: PropsType) => {
     const newDateList = [...dateList];
 
     const [firstIndex, secondIndex, thirdIndex] = getDateListIndex(newDateList, schedule);
-    if (firstIndex === -1 || secondIndex === -1) return;
+    if (firstIndex === -1 || secondIndex === -1 || thirdIndex === -1) return;
 
     newDateList[firstIndex][secondIndex].schedules[thirdIndex] = { ...newDateList[firstIndex][secondIndex].schedules[thirdIndex], ...schedule };
+    setDateList(newDateList);
+  };
+
+  const deleteSchedule = (schedule: Schedule) => {
+    const newDateList = [...dateList];
+
+    const [firstIndex, secondIndex, thirdIndex] = getDateListIndex(newDateList, schedule);
+    if (firstIndex === -1 || secondIndex === -1 || thirdIndex === -1) return;
+
+    newDateList[firstIndex][secondIndex].schedules = newDateList[firstIndex][secondIndex].schedules.filter((item) => item.id !== schedule.id);
     setDateList(newDateList);
   };
 
@@ -72,5 +82,6 @@ export const useCalendar = ({ currentDate }: PropsType) => {
     dateList,
     addSchedule,
     updateSchedule,
+    deleteSchedule,
   };
 };

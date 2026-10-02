@@ -9,9 +9,10 @@ type PropsType = {
   currentDate: Date;
   dateList: DateList;
   updateSchedule: (schedule: Schedule) => void;
+  deleteSchedule: (schedule: Schedule) => void;
 };
 
-export const CalendarBody = ({ currentDate, dateList, updateSchedule }: PropsType) => {
+export const CalendarBody = ({ currentDate, dateList, updateSchedule, deleteSchedule }: PropsType) => {
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(null);
   const closeModal = () => setSelectedSchedule(null);
 
@@ -35,7 +36,7 @@ export const CalendarBody = ({ currentDate, dateList, updateSchedule }: PropsTyp
           </tr>
         ))}
       </tbody>
-      <ScheduleDetailModal selectedSchedule={selectedSchedule} closeModal={closeModal} updateSchedule={updateSchedule} />
+      <ScheduleDetailModal selectedSchedule={selectedSchedule} closeModal={closeModal} updateSchedule={updateSchedule} deleteSchedule={deleteSchedule} />
     </>
   );
 };
