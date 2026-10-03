@@ -1,12 +1,6 @@
-import { createContext, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import type { LoginUserType } from "../types/login";
-
-export type LoginUserContextType = {
-  loginUser: LoginUserType;
-  setLoginUser: (user: LoginUserType) => void;
-};
-
-export const LoginUserContext = createContext<LoginUserContextType | undefined>(undefined);
+import { LoginUserContext } from "./LoginUserContext";
 
 export const LoginUserProvider = ({ children }: { children: ReactNode }) => {
   const [loginUser, setLoginUser] = useState<LoginUserType>({
