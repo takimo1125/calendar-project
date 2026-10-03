@@ -4,13 +4,10 @@ import { CalendarBody } from "../organisms/CalendarBody";
 import { useCalendar } from "../../hooks/useCalendar";
 import { useState } from "react";
 import { CalendarNav } from "../organisms/CalendarNav";
-import type { Schedule } from "../../types/calendar";
-import { getScheduleList } from "../../api/calendar";
 
 export const CalendarPage = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [scheduleList, setScheduleList] = useState<Schedule[]>(getScheduleList());
-  const { dateList, addSchedule, updateSchedule, deleteSchedule } = useCalendar({ currentDate: currentDate, scheduleList: scheduleList, setScheduleList: setScheduleList });
+  const { dateList, addSchedule, updateSchedule, deleteSchedule } = useCalendar({ currentDate });
 
   return (
     <>
