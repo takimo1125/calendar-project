@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { eachDayOfInterval, eachWeekOfInterval, endOfMonth, endOfWeek, isSameDay, startOfMonth } from "date-fns";
-import { getScheduleList } from "../api/calendar";
 import type { DateList, Schedule } from "../types/calendar";
 
 type PropsType = {
   currentDate: Date;
+  scheduleList: Schedule[];
+  setScheduleList: Dispatch<SetStateAction<Schedule[]>>;
 };
 
-export const useCalendar = ({ currentDate }: PropsType) => {
+export const useCalendar = ({ currentDate, scheduleList, setScheduleList }: PropsType) => {
   const [dateList, setDateList] = useState<DateList>([]);
 
   const getDateListIndex = (currentDateList: DateList, schedule: Schedule): number[] => {
@@ -26,33 +27,15 @@ export const useCalendar = ({ currentDate }: PropsType) => {
   };
 
   const addSchedule = (schedule: Schedule) => {
-    const newDateList = [...dateList];
-
-    const [firstIndex, secondIndex] = getDateListIndex(newDateList, schedule);
-    if (firstIndex === -1) return;
-
-    newDateList[firstIndex][secondIndex].schedules = [...newDateList[firstIndex][secondIndex].schedules, schedule];
-    setDateList(newDateList);
+    setScheduleList((prevScheduleList) => [...prevScheduleList, schedule]);
   };
 
   const updateSchedule = (schedule: Schedule) => {
-    const newDateList = [...dateList];
-
-    const [firstIndex, secondIndex, thirdIndex] = getDateListIndex(newDateList, schedule);
-    if (firstIndex === -1 || secondIndex === -1 || thirdIndex === -1) return;
-
-    newDateList[firstIndex][secondIndex].schedules[thirdIndex] = { ...newDateList[firstIndex][secondIndex].schedules[thirdIndex], ...schedule };
-    setDateList(newDateList);
+    setScheduleList((prevScheduleList) => prevScheduleList.map((item) => (item.id === schedule.id ? { ...item, ...schedule } : item)));
   };
 
   const deleteSchedule = (schedule: Schedule) => {
-    const newDateList = [...dateList];
-
-    const [firstIndex, secondIndex, thirdIndex] = getDateListIndex(newDateList, schedule);
-    if (firstIndex === -1 || secondIndex === -1 || thirdIndex === -1) return;
-
-    newDateList[firstIndex][secondIndex].schedules = newDateList[firstIndex][secondIndex].schedules.filter((item) => item.id !== schedule.id);
-    setDateList(newDateList);
+    setScheduleList((prevScheduleList) => prevScheduleList.filter((item) => item.id !== schedule.id));
   };
 
   useEffect(() => {
@@ -66,8 +49,6 @@ export const useCalendar = ({ currentDate }: PropsType) => {
         end: endOfWeek(date),
       }).map((date) => ({ date, schedules: [] as Schedule[] }));
     });
-
-    const scheduleList = getScheduleList();
     scheduleList.forEach((schedule) => {
       const [firstIndex, secondIndex] = getDateListIndex(newDateList, schedule);
       if (firstIndex === -1) return;
@@ -76,7 +57,7 @@ export const useCalendar = ({ currentDate }: PropsType) => {
     });
 
     setDateList(newDateList);
-  }, [currentDate]);
+  }, [currentDate, scheduleList]);
 
   return {
     dateList,
